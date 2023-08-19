@@ -16,7 +16,7 @@ import lpips
 import pandas as pd
 import json
 import imageio, cv2
-from skimage.draw import circle, line_aa, polygon
+from skimage.draw import disk, line_aa, polygon
 from tqdm import tqdm
 
 def resort(fns):
@@ -645,7 +645,7 @@ def produce_ma_mask(kp_array, img_size=(128, 64), point_radius=4):
     for i, joint in enumerate(kp_array):
         if kp_array[i][0] == MISSING_VALUE or kp_array[i][1] == MISSING_VALUE:
             continue
-        yy, xx = circle(joint[0], joint[1], radius=point_radius, shape=img_size)
+        yy, xx = disk(joint[0], joint[1], radius=point_radius, shape=img_size)
         mask[yy, xx] = True
 
     mask = dilation(mask, square(5))
